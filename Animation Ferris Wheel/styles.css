@@ -7,6 +7,10 @@
   width: 55vw;
   max-height: 500px;
   max-width: 500px;
+  animation-name: wheel;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .line {
@@ -77,3 +81,14 @@
   right: 17%;
   top: 7%;
 }
+
+@keyframes wheel {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
