@@ -64,12 +64,12 @@
 }
 
 .cabin:nth-of-type(4) {
-  right: -8.5%;
+  left: -8.5%;
   top: 50%;
 }
 
 .cabin:nth-of-type(5) {
-  right: 17%;
+  left: 17%;
   top: 7%;
 }
 
