@@ -51,10 +51,18 @@ body {
   margin-top: 75px;
   position: relative;
   z-index: 4;
+  transition: 1s ease-in-out 0ms;
+  transition-property: transform;
 }
 
 .penguin *{
     position: absolute;
+}
+
+.penguin:active{
+    transform: scale(1.5);
+    font-size: 50%;
+    cursor: not-allowed;
 }
 
 .penguin-head {
@@ -221,6 +229,10 @@ body {
     left: 5%;
     transform-origin: 0% 0%;
     transform: rotate(130deg) scaleX(-1);
+    animation-name: wave;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 
 .arm.right{
@@ -228,6 +240,24 @@ body {
     top: 0%;
     right: -5%;
     transform: rotate(-45deg);
+}
+
+@keyframes wave{
+    10%{
+        transform: rotate(110deg) scaleX(-1);
+    }
+
+    20%{
+        transform: rotate(130deg) scaleX(-1);
+    }
+
+    30%{
+        transform: rotate(110deg) scaleX(-1);
+    }
+
+    40%{
+        transform: rotate(130deg) scaleX(-1);
+    }
 }
 
 .foot{
@@ -254,7 +284,7 @@ body {
 
 .ground {
   width: 100vw;
-  height: 400px;
+  height: calc(100vh - 300px);
   background: linear-gradient(90deg, rgb(88, 175, 236), rgb(182, 255, 255));
   z-index: 3;
   position: absolute;
