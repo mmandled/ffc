@@ -20,3 +20,29 @@ const numRoundedDown = Math.floor(6.7);
 console.log(numRoundedDown);
 
 console.log("Now, generate a random integer between two values.");
+
+const randomInt = Math.floor(Math.random() * (max - min) + min);
+console.log(randomInt);
+
+console.log("The Math.ceil() method rounds the value up to the nearest whole integer.");
+
+const numRoundedUp = Math.ceil(3.2);
+console.log(numRoundedUp);
+
+console.log("The Math.round() method rounds the value to the nearest whole integer.");
+
+const numRounded = Math.round(2.7);
+console.log(numRounded);
+
+const numRounded2 = Math.round(11.2);
+console.log(numRounded2);
+
+console.log("The Math.max() and Math.min() methods are used to get the maximum and minimum number from a range.");
+
+const maxNum = Math.max(3, 125, 55, 24);
+console.log(maxNum);
+
+const minNum = Math.min(6, 90, 14, 90, 2);
+console.log(minNum);
+
+console.log("It was fun learning about the different Math methods with you!");
