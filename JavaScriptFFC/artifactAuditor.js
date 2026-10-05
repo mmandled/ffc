@@ -52,11 +52,33 @@ function moveArtifact(id, gallery, year){
 }
 
 function toggleDisplayStatus(id){
-    artifact = collection[id];
+    const artifact = collection[id];
 
     if(artifact){
         artifact.onDisplay = !artifact.onDisplay;
     }
+}
+
+function updateCurator(id, name){
+    const artifact = collection[id];
+    
+    if(artifact){
+        artifact.curator.name = name;
+    }
+}
+
+function buildSummary(id) {
+  const artifact = collection[id];
+  if (!artifact) {
+    return "Artifact not found";
+  }
+  const currentLocation = artifact.locations[artifact.locations.length - 1];
+
+  return `${artifact.title}
+Category: ${artifact.category}
+Curator: ${artifact.curator.name}
+Current Gallery: ${currentLocation.gallery}
+On Display: ${artifact.onDisplay}`
 }
 
 console.log(getArtifactTitle(102));
@@ -67,7 +89,13 @@ console.log(collection[101].tags);
 console.log(moveArtifact(102, "Hall B", 2026))
 console.log(collection[102].locations);
 
-toggleDisplayStatus(101);
+console.log(collection[102].onDisplay);
 
-// console.log(toggleDisplayStatus(101));
-// console.log(collection[101]);
+toggleDisplayStatus(102);
+console.log(collection[102].onDisplay);
+
+updateCurator(101, "Fran Sinclair");
+console.log(collection[101].curator.name);
+
+
+console.log(buildSummary(101));
