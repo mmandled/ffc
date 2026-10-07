@@ -37,22 +37,20 @@ const question5 = {
 
 questions.push(question1, question2, question3, question4, question5);
 
-function getRandomQuestion(questionArr) {
-  const randomIndex = Math.floor(Math.random() * questionArr.length);
-
-  return questionArr[randomIndex];
+function getRandomQuestion(arr){
+  const rando = Math.floor(Math.random() * arr.length);
+  return arr[rando];
 }
 
-function getRandomComputerChoice(choiceArr) {
-  const randomIndex = Math.floor(Math.random() * choiceArr.length);
-
-  return choiceArr[randomIndex];
+function getRandomComputerChoice(arr){
+  const rando = Math.floor(Math.random() * arr.length);
+  return arr[rando];
 }
 
-function getResults(ques, choi) {
-  if (choi === ques.answer) {
+function getResults(randomQuestion, randomComputer){
+  if(randomQuestion.answer === randomComputer){
     return "The computer's choice is correct!";
-  } else {
-    return `The computer's choice is wrong. The correct answer is: ${ques.answer}`;
+  }else{
+    return `The computer's choice is wrong. The correct answer is: ${randomQuestion.answer}`;
   }
 }
