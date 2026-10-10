@@ -38,4 +38,3 @@ function lookUpProfile(name, property){
   }
   return "No such contact";
 }
-
