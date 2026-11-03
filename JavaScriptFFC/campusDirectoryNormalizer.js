@@ -58,3 +58,60 @@ const rawData = {
   },
 };
 
+// THIS IS CHECK USING NESTED LOOP
+// function getInstructorByEmail(email) {
+//   for (const dept in rawData) {
+//     const programs = rawData[dept].programs;
+
+//     for (const program of programs) {
+//       for (const instructor of program["instructors"]) {
+//         if (instructor.email === email) {
+//           return instructor.name; 
+//         }
+//       }
+//     }
+//   }
+//   return null;
+// }
+
+// console.log(getInstructorByEmail("fatima@example.com"));
+// console.log(getInstructorByEmail("alejandro@example.com"));
+// console.log(getInstructorByEmail("sofia@example.com"));
+
+function normalizeDirectory(rawData) {
+  const departmentsById = {};
+  const programsById = {};
+  const instructorsById = {};
+  const instructorsByEmail = {};
+
+  const departmentEntries = Object.entries(rawData);
+
+  for (let i = 0; i < departmentEntries.length; i++) {
+
+    const [departmentName, departmentData] = departmentEntries[i];
+
+    const departmentId = departmentData.Dept_code || `dept-${i + 1}`;
+
+    departmentsById[departmentId] = {
+      id: departmentId,
+      code: departmentData.Dept_code,
+      name: departmentName,
+      programIds: [],
+    };
+
+    for (let j = 0; j < departmentData.programs.length; j++) {
+      const program = departmentData.programs[j];
+
+      programsById[program.id] = {
+        ...program,
+        departmentId,
+      };
+
+      console.log(programsById[program.id]);
+      
+    }
+    
+  }
+}
+
+normalizeDirectory(rawData);
