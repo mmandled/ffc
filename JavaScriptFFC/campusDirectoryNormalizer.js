@@ -107,11 +107,51 @@ function normalizeDirectory(rawData) {
         departmentId,
       };
 
-      console.log(programsById[program.id]);
-      
+      departmentsById[departmentId].programIds.push(program.id);
+      for (let k = 0; k < program.instructors.length; k++) {
+        const instructor = program.instructors[k];
+
+        instructorsById[instructor.id] = {
+          ...instructor,
+          programId: program.id,
+          departmentId,
+        };
+
+        if (instructor.email) {
+          instructorsByEmail[instructor.email] = instructor.id;
+        }
+      }
     }
-    
   }
+
+  return {
+    departmentsById,
+    programsById,
+    instructorsById,
+    instructorsByEmail,
+  };
 }
 
-normalizeDirectory(rawData);
+const normalizedData = normalizeDirectory(rawData);
+
+
+function getInstructorByEmail(email, normalizedData) {
+  const instructorId = normalizedData.instructorsByEmail[email];
+
+  if (!instructorId) {
+    return "Instructor not found";
+  }
+
+  const instructor = normalizedData.instructorsById[instructorId];
+  const department = normalizedData.departmentsById[instructor.departmentId];
+
+  return {
+    name: instructor.name ?? "Unknown Instructor",
+    officeHours: instructor.officeHours ?? "Not Available",
+    department: department.name ?? "Unknown Department",
+  };
+}
+
+console.log(getInstructorByEmail("fatima@example.com", normalizedData));
+console.log(getInstructorByEmail("alejandro@example.com", normalizedData));
+console.log(getInstructorByEmail("not_found@example.com", normalizedData));
