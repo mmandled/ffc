@@ -152,6 +152,57 @@ function getInstructorByEmail(email, normalizedData) {
   };
 }
 
-console.log(getInstructorByEmail("fatima@example.com", normalizedData));
-console.log(getInstructorByEmail("alejandro@example.com", normalizedData));
-console.log(getInstructorByEmail("not_found@example.com", normalizedData));
+function listRoomsByBuilding(buildingCode, normalizedData) {
+
+  const programValues = Object.values(normalizedData.programsById);
+  const rooms = [];
+
+  for (let i = 0; i < programValues.length; i++) {
+    const program = programValues[i];
+    const department = normalizedData.departmentsById[program.departmentId];
+
+    if (department.code === buildingCode && program.room != null) {
+      rooms.push(program.room);
+    }
+  }
+
+  rooms.sort();
+  return rooms;
+}
+
+
+function renderDirectorySummary(normalizedData) {
+  const departments = Object.keys(normalizedData.departmentsById).length;
+  const programs = Object.keys(normalizedData.programsById).length;
+  const instructors = Object.keys(normalizedData.instructorsById).length;
+
+  const instructorValues = Object.values(normalizedData.instructorsById);
+  let missingOfficeHours = 0;
+
+  for (let i = 0; i < instructorValues.length; i++) {
+    if (instructorValues[i].officeHours == null) {
+      missingOfficeHours++;
+    }
+  }
+
+  const programValues = Object.values(normalizedData.programsById);
+  let programsWithoutRooms = 0;
+
+  for (let i = 0; i < programValues.length; i++) {
+    if (programValues[i].room === null) {
+      programsWithoutRooms++;
+    }
+  }
+
+  return `
+Campus Directory Summary
+------------------------
+Departments: ${departments}
+Programs: ${programs}
+Instructors: ${instructors}
+Missing Office Hours: ${missingOfficeHours}
+Programs Without Rooms: ${programsWithoutRooms}
+`;
+}
+
+console.log(renderDirectorySummary(normalizedData))
