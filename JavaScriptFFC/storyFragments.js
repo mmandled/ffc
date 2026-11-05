@@ -66,4 +66,51 @@ function sortFragments(arr){
 
 const sortedFragments = sortFragments(compactedShuffledFragments);
 
-function dedupeFragments(arr){}
+function dedupeFragments(arr){
+  const result = [];
+
+  for(let i = 0; i < arr.length; i++){
+    if(result.length > 0 && result[result.length - 1].id === arr[i].id){
+      console.log(`[DEDUPED] Found duplicate for id: ${arr[i].id}`);
+    }else{
+      result.push(arr[i]);
+    }
+  }
+
+  return result;
+}
+
+const dedupedFragments = dedupeFragments(sortedFragments);
+
+function fillMissingFragments(arr) {
+  if (arr.length === 0) return [];
+
+  const result = [];
+  let currentIdx = 0;
+  const startId = arr[0].id;
+  const endId = arr[arr.length - 1].id;
+
+  for (let id = startId; id <= endId; id++) {
+    if (currentIdx < arr.length && arr[currentIdx].id === id) {
+      result.push(arr[currentIdx]);
+      currentIdx++;
+    } else {
+      console.log(`[FILLED] Placeholder inserted for id: ${id}`);
+      result.push({ id: id, text: "[...]" });
+    }
+  }
+
+  return result;
+}
+
+const filledFragments = fillMissingFragments(dedupedFragments);
+
+function assembleStory(arr) {
+  const lines = [];
+  for (let i = 0; i < arr.length; i++) {
+    lines.push(arr[i].text);
+  }
+  return lines.join("\n");
+}
+
+console.log(assembleStory(filledFragments));
