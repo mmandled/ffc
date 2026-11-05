@@ -25,3 +25,45 @@ const shuffledFragments = [
   { id: 12, text: "he lay down beside the course to take a nap" },
   { id: 18, text: "the Tortoise was near the goal." },
 ];
+
+function compactFragments(arr){
+  const result = [];
+  let removedCount = 0;
+
+  for(let i = 0; i < arr.length; i++){
+    if(arr[i] !== undefined){
+      result.push(arr[i]);
+    }else{
+      removedCount++;
+    }
+  }
+  
+  if(removedCount > 0){
+    console.log(`[COMPACTED] Removed undefined elements from array.`);
+  }
+
+  return result;
+}
+
+const compactedShuffledFragments = compactFragments(shuffledFragments);
+
+function sortFragments(arr){
+  const result = arr.slice();
+
+  for(let i = 0; i < result.length - 1; i++){
+    for(let j = 0; j < result.length - 1 - i; j++){
+      if(result[j].id > result[j + 1].id){
+
+        const temp = result[j];
+        result[j] = result[j + 1];
+        result[j + 1] = temp;
+      }
+    }
+  }
+
+  return result;
+}
+
+const sortedFragments = sortFragments(compactedShuffledFragments);
+
+function dedupeFragments(arr){}
