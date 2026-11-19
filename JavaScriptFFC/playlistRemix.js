@@ -39,3 +39,65 @@ const playlists = [
         }
     ]
 ];
+
+function flattenPlaylists(playlists) {
+    if (!Array.isArray(playlists)) return [];
+
+    const flattened = [];
+    playlists.forEach((playlist, playlistIdx) => {
+        if (Array.isArray(playlist)) {
+            playlist.forEach((track, trackIdx) => {
+                flattened.push({
+                    ...track,
+                    source: [playlistIdx, trackIdx]
+                });
+            });
+        }
+    });
+    return flattened;
+}
+
+function scoreTracks(tracks) {
+    return tracks.map(track => ({
+        ...track,
+        score: track.votes * 10 - Math.abs(track.bpm - 120)
+    }));
+}
+
+function dedupeTracks(tracks) {
+    const seenIds = new Set();
+    return tracks.filter(track => {
+        if (seenIds.has(track.trackId)) {
+            return false;
+        }
+        seenIds.add(track.trackId);
+        return true;
+    });
+}
+
+function enforceArtistQuota(tracks, maxPerArtist) {
+    const artistCounts = {};
+    return tracks.filter(track => {
+        const currentCount = artistCounts[track.artist] || 0;
+        if (currentCount < maxPerArtist) {
+            artistCounts[track.artist] = currentCount + 1;
+            return true;
+        }
+        return false;
+    });
+}
+
+function buildSchedule(tracks) {
+    return tracks.map((track, index) => ({
+        slot: index + 1,
+        trackId: track.trackId
+    }));
+}
+
+function remixPlaylist(playlists, maxPerArtist) {
+    const flattened = flattenPlaylists(playlists);
+    const scored = scoreTracks(flattened);
+    const deduped = dedupeTracks(scored);
+    const quotaEnforced = enforceArtistQuota(deduped, maxPerArtist);
+    return buildSchedule(quotaEnforced);
+}
